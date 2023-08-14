@@ -29,7 +29,7 @@ BASH_COMPDIR?=$(DATADIR)/bash-completion/completions
 # Path to db_185.h include
 DBM_INCLUDE:=$(DESTDIR)/usr/include
 
-SHARED_LIBS = y
+SHARED_LIBS = n
 
 DEFINES= -DRESOLVE_HOSTNAMES -DLIBDIR=\"$(LIBDIR)\"
 ifneq ($(SHARED_LIBS),y)

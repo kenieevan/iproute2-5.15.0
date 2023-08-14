@@ -5,7 +5,7 @@ TCOBJ= tc.o tc_qdisc.o tc_class.o tc_filter.o tc_util.o tc_monitor.o \
 
 include ../config.mk
 
-SHARED_LIBS ?= y
+SHARED_LIBS ?= n
 
 TCMODULES :=
 TCMODULES += q_fifo.o
@@ -109,8 +109,9 @@ ifneq ($(TC_CONFIG_NO_XT),y)
   endif
 endif
 
+LDFLAGS += -static
 TCOBJ += $(TCMODULES)
-LDLIBS += -L. -lm
+LDLIBS += -L. -lm -lz
 
 ifeq ($(SHARED_LIBS),y)
 LDLIBS += -ldl
@@ -135,7 +136,7 @@ CFLAGS += -DYY_NO_INPUT
 MODDESTDIR := $(DESTDIR)$(LIBDIR)/tc
 
 %.so: %.c
-	$(QUIET_CC)$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -shared -fpic $< -o $@
+	$(QUIET_CC)$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -static  $< -o $@
 
 
 all: tc $(TCSO)
